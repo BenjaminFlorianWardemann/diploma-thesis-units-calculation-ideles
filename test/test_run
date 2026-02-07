@@ -1,0 +1,8 @@
+#!/usr/bin/expect -f
+
+spawn make start
+expect "> "
+send "[lindex $argv 0]\n"
+expect "> "
+send "quit;\n"
+interact
