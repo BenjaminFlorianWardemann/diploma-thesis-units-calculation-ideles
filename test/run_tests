@@ -1,0 +1,57 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+use File::Basename;
+
+my $infile = $ARGV[0];
+my $logfile = "out/".basename("$infile.".time.".log");
+
+sub run
+{
+  my $cmd = "";
+  if ($#_ eq 0)
+  {
+    $cmd = "K := NumberField(Polynomial($_[0])); test(K);";
+  }
+  else
+  {
+    $cmd = "f<w> := GF($_[0]); ".
+           "F<X> := FunctionField(f); ".
+           "E := FunctionField(Polynomial($_[1])); test(E);";
+  }
+  #print "--- ".join(' ', @_)." ---\n";
+  my $rc = system("cd ../magma ; ../test/test_run '$cmd' >>../test/$logfile 2>&1");
+  #print "--- ".join(' ', @_)." ---\n";
+  return $rc;
+}
+
+open(IN, $infile);
+my @tests = <IN>;
+close(IN);
+
+for my $test (@tests)
+{
+  $test =~ s/[\r\n]//g;
+  $test =~ s/^\s+//;
+  $test =~ s/\s+$//;
+  if ($test ne '')
+  {
+    if ($test =~ /^print(.*)$/)
+    {
+      my $text = $1;
+      $text =~ s/^\s+//;
+      system("echo >> $logfile ; echo '$text' >> $logfile ; echo >> $logfile");
+    }
+    elsif ($test =~ /^#/)
+    {
+    }
+    else
+    {
+      run(split(/\s+/, $test));
+    }
+  }
+}
+
+exit 0;
+

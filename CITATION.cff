@@ -1,0 +1,12 @@
+cff-version: 1.2.0
+message: "If you use this software or the thesis, please cite it as below."
+authors:
+  - family-names: "Wardemann"
+    given-names: "Benjamin Florian"
+    orcid: "https://orcid.org/0009-0003-3567-1701"
+title: "Zur Einheitenberechnung mittels Idelen"
+type: thesis
+version: 1.0.0
+doi: "10.5281/zenodo.18519141"
+date-released: 2011-05-24
+url: "https://github.com/BenjaminFlorianWardemann/diploma-thesis-units-calculation-ideles"
